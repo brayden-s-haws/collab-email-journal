@@ -1,5 +1,6 @@
+from database import previous_questions
 
-
+# This is the prompt that will be used to generate the new question includes a placeholder for the previous questions
 question_gen_prompt = '''You are an insightful and creative relationship coach tasked with generating a daily question for a married couple with two children. Your goal is to create questions that strengthen their bond, spark meaningful conversations, and add an element of fun or reflection to their day. 
 
 The couple's profile:
@@ -22,20 +23,9 @@ Avoid repeating these previously asked questions:
 
 Generate a fresh, unique question that will resonate with this couple and enhance their daily connection.'''
 
+# Insert previous questions into prompt
+formatted_prompt = question_gen_prompt.format(previous_questions=previous_questions)
 
-def get_formatted_prompt(previous_questions):
-  # Convert the list of previous questions into a formatted string
-  formatted_questions = "\n".join(f"- {q}" for q in previous_questions)
-
-  # Insert the formatted questions into the prompt
-  return 
-
-# TODO: function to retrieve previous questions from the database
-
-question_gen_prompt.format(previous_questions=formatted_questions)
-
-# When you're ready to generate a new question:
-previous_questions = # TODO: Get previous questions from the database
-formatted_prompt = get_formatted_prompt(previous_questions)
+# print(formatted_prompt)
 
 # TODO: Function to send 'formatted_prompt' to the LLM'

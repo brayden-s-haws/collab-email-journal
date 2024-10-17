@@ -1,7 +1,10 @@
-Coming soon
+# Notes for setup:
 
 
-Question Creation Prompt
+## Question Creation Prompt
+
+You'll need to replace the prompt with a prompt unique to your use case. Fill out this template and put it into the LLM of your choice to generate the prompt. Be sure to include instructions to include {previous_questions} in the prompt
+
 Create a comprehensive prompt for an AI language model to generate daily questions for a specific audience. The prompt should include the following elements:
 
 1. Context: Provide a brief description of the AI's role and the purpose of the questions it will generate.
@@ -33,10 +36,12 @@ Ensure the prompt is clear, concise, and provides enough detail for the AI to ge
 
 
 
-# Setup Database Schema
+## Setup Database Schema
+You'll need a postgres database with the following tables. Store the database details as environment variables
+
 CREATE SCHEMA IF NOT EXISTS schema_name;
 
-# Add Tables
+## Add Tables
 CREATE TABLE schema_name.users (
     user_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
