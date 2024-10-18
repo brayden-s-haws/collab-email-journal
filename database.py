@@ -1,42 +1,69 @@
 import os
+from datetime import datetime, timedelta
 
 from sqlalchemy import create_engine, Column, Integer, String, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+
 ## SETUP DATABASE CONNECTION ##
 db_url = os.environ.get('DATABASE_URL')
 
-# Create the SQLAlchemy engine
-engine = create_engine(db_url, connect_args={'options': '-csearch_path=couples_journal'})
 
-# Create a session factory
-Session = sessionmaker(bind=engine)
+def create_session(db_url):
+    """
+    Create a database session.
+    """
+    engine = create_engine(db_url, connect_args={'options': '-csearch_path=couples_journal'})
+    Session = sessionmaker(bind=engine)
+    return Session()
+
+
+def setup_base_class():
+    """
+    Setup the declarative base class.
+    """
+    return declarative_base()
+
+
+class Question(setup_base_class()):
+    __tablename__ = 'questions'
+
+    question_id = Column(Integer, primary_key=True)
+    question_text = Column(String)
+    question_date = Column(Date)
+    created_at = Column(Date)
+    schema = 'couples_journal'
+
+
+def get_previous_questions(session, start_date):
+    """
+    Retrieve questions from the database from a given start date.
+    """
+    questions = session.query(Question).filter(Question.question_date > start_date).all()
+    session.close()
+    return questions
+  
+
+def format_questions(questions):
+    """
+    Format questions into a single string.
+    """
+    return '; '.join([question.question_text for question in questions])
+
 
 # Create a session
-session = Session()
+session = create_session(db_url)
 
-# Setup questions base class
-Base = declarative_base()
+# Get the current date
+one_year_ago = datetime.now().date() - timedelta(days=365)
 
-class Question(Base):
-  __tablename__ = 'questions'
+# Fetch and format previous questions
+previous_questions_fetch = get_previous_questions(session, one_year_ago)
+previous_questions = format_questions(previous_questions_fetch)
 
-  question_id = Column(Integer, primary_key=True)
-  question_text = Column(String)
-  question_date = Column(Date)
-  created_at = Column(Date)
-  schema = 'couples_journal'
-
-previous_questions_fetch = session.query(Question).all()
-"""
-for question in previous_questions_fetch:
-    print(f"ID: {question.question_id}, Question: {question.question_text}, Date: {question.question_date}")
-"""
-
-previous_questions = '; '.join([question.question_text for question in previous_questions_fetch])
-
-# print(previous_questions)
 
 
 # TODO: Setup write of new question from the LLM response
+  #TODO: Class for response
+  #TODO: function for writing back
