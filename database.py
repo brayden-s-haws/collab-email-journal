@@ -27,11 +27,13 @@ def setup_base_class():
 
 
 class Question(setup_base_class()):
-    __tablename__ = 'questions'
+    __tablename__ = 'responses'
 
-    question_id = Column(Integer, primary_key=True)
-    question_text = Column(String)
-    question_date = Column(Date)
+    response_id = Column(Integer, primary_key=True)
+    user_email = Column(String)
+    question_id = Column(Integer)
+    response_text = Column(String)
+    response_date = Column(Date)
     created_at = Column(Date)
     schema = 'couples_journal'
 
@@ -63,7 +65,17 @@ previous_questions_fetch = get_previous_questions(session, one_year_ago)
 previous_questions = format_questions(previous_questions_fetch)
 
 
+## WRITE NEW QUESTION TO DATABASE ##
+
+class Response(setup_base_class()):
+  __tablename__ = 'responses'
+
+  response_id = Column(Integer, primary_key=True)
+  question_text = Column(String)
+  question_date = Column(Date)
+  created_at = Column(Date)
+  schema = 'couples_journal'
+
 
 # TODO: Setup write of new question from the LLM response
-  #TODO: Class for response
   #TODO: function for writing back

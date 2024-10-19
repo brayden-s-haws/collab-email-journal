@@ -46,5 +46,3 @@ formatted_prompt = question_gen_prompt.format(previous_questions=previous_questi
 # Get the new question
 new_question = get_claude_question(formatted_prompt)
 
-
-# TODO: Function to send 'formatted_prompt' to the LLM'
