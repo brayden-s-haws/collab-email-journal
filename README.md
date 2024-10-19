@@ -61,7 +61,7 @@ CREATE TABLE schema_name.questions (
 
 CREATE TABLE schema_name.responses (
     response_id SERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    user_email VARCHAR(100) NOT NULL,
     question_id BIGINT  NOT null,
     response_text VARCHAR NOT NULL,
     response_date DATE NOT NULL,

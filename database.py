@@ -60,7 +60,14 @@ one_year_ago = datetime.now().date() - timedelta(days=365)
 
 # Fetch and format previous questions
 previous_questions_fetch = get_previous_questions(session, one_year_ago)
-previous_questions = format_questions(previous_questions_fetch)
+
+question_data = get_previous_questions(session, one_year_ago)
+previous_questions = format_questions(question_data)
+question_temp_id = max(question.question_id for question in question_data) + 1
+
+print(previous_questions)
+print(question_temp_id)
+# previous_questions = format_questions(previous_questions_fetch)
 
 
 ## WRITE NEW QUESTION TO DATABASE ##
