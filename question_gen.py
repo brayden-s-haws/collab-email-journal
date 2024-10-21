@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 
 from anthropic import Anthropic
-from sqlalchemy import create_engine, Column, Integer, String, Date
+from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -34,7 +34,7 @@ class Question(setup_base_class()):
     question_id = Column(Integer, primary_key=True)
     question_text = Column(String)
     question_date = Column(Date)
-    created_at = Column(Date)
+    created_at = Column(DateTime)
     schema = 'couples_journal'
 
 
@@ -109,3 +109,6 @@ formatted_prompt = question_gen_prompt.format(previous_questions=previous_questi
 
 # Get the new question
 new_question = get_claude_question(formatted_prompt)
+
+print(previous_questions)
+print(new_question)
