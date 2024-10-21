@@ -1,8 +1,72 @@
+import os
+from datetime import datetime, timedelta
+
 from anthropic import Anthropic
+from sqlalchemy import create_engine, Column, Integer, String, Date
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-from database import previous_questions
+## GET PREVIOUS QUESTIONS FROM DATABASE ##
+
+# Setup Database Connection
+db_url = os.environ.get('DATABASE_URL')
 
 
+def create_session(db_url):
+    """
+    Create a database session.
+    """
+    engine = create_engine(db_url, connect_args={'options': '-csearch_path=couples_journal'})
+    Session = sessionmaker(bind=engine)
+    return Session()
+
+
+def setup_base_class():
+    """
+    Setup the declarative base class.
+    """
+    return declarative_base()
+
+
+class Question(setup_base_class()):
+    __tablename__ = 'questions'
+
+    question_id = Column(Integer, primary_key=True)
+    question_text = Column(String)
+    question_date = Column(Date)
+    created_at = Column(Date)
+    schema = 'couples_journal'
+
+
+def get_previous_questions(session, start_date):
+    """
+    Retrieve questions from the database from a given start date.
+    """
+    questions = session.query(Question).filter(Question.question_date > start_date).all()
+    session.close()
+    return questions
+
+
+def format_questions(questions):
+    """
+    Format questions into a single string.
+    """
+    return '; '.join([question.question_text for question in questions])
+
+
+# Create a session
+session = create_session(db_url)
+
+# Get the current date
+one_year_ago = datetime.now().date() - timedelta(days=365)
+
+# Fetch and format previous questions
+question_data = get_previous_questions(session, one_year_ago)
+previous_questions = format_questions(question_data)
+question_temp_id = max(question.question_id for question in question_data) + 1
+
+
+## SEND QUESTION TO LLM ##
 claude_client = Anthropic()
 
 # This is the prompt that will be used to generate the new question includes a placeholder for the previous questions
@@ -45,4 +109,3 @@ formatted_prompt = question_gen_prompt.format(previous_questions=previous_questi
 
 # Get the new question
 new_question = get_claude_question(formatted_prompt)
-

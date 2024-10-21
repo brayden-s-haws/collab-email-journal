@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
+
 ## SETUP DATABASE CONNECTION ##
 db_url = os.environ.get('DATABASE_URL')
 
@@ -34,35 +35,6 @@ class Question(setup_base_class()):
     question_date = Column(Date)
     created_at = Column(Date)
     schema = 'couples_journal'
-
-
-def get_previous_questions(session, start_date):
-    """
-    Retrieve questions from the database from a given start date.
-    """
-    questions = session.query(Question).filter(Question.question_date > start_date).all()
-    session.close()
-    return questions
-  
-
-def format_questions(questions):
-    """
-    Format questions into a single string.
-    """
-    return '; '.join([question.question_text for question in questions])
-
-
-# Create a session
-session = create_session(db_url)
-
-# Get the current date
-one_year_ago = datetime.now().date() - timedelta(days=365)
-
-# Fetch and format previous questions
-question_data = get_previous_questions(session, one_year_ago)
-previous_questions = format_questions(question_data)
-question_temp_id = max(question.question_id for question in question_data) + 1
-
 
 
 ## WRITE NEW QUESTION TO DATABASE ##
