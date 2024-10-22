@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -41,7 +41,8 @@ def write_new_question(session, new_question):
     Writes newly generated question to the database.
     """
     new_question_details = Question(question_text=new_question)
-    session.add()
+    session.add(new_question_details)
+    session.commit()
 
 
 ## WRITE NEW QUESTION TO DATABASE ##
@@ -49,11 +50,9 @@ def write_new_question(session, new_question):
 # Create a session
 session = create_session(db_url)
 
-write_new_question()
+write_new_question(session, new_question)
 
 # TODO: Setup write of new question from the LLM response
-  #TODO: Class for response
-  #TODO: function for writing back
 
 
 
