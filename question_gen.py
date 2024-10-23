@@ -112,3 +112,4 @@ new_question = get_claude_question(formatted_prompt)
 
 print(previous_questions)
 print(new_question)
+print(question_temp_id)

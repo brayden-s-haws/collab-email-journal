@@ -29,12 +29,12 @@ def setup_base_class():
 
 class Question(setup_base_class()):
     __tablename__ = 'questions'
+    __table_args__ = {'schema': 'couples_journal'}
 
     question_id = Column(Integer, primary_key=True)
     question_text = Column(String)
     question_date = Column(Date, default=date.today)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    schema = 'couples_journal'
+    created_at = Column(DateTime, default=datetime.now)
 
 def write_new_question(session, new_question):
     """
@@ -43,6 +43,7 @@ def write_new_question(session, new_question):
     new_question_details = Question(question_text=new_question)
     session.add(new_question_details)
     session.commit()
+    session.close()
 
 
 ## WRITE NEW QUESTION TO DATABASE ##
@@ -51,9 +52,6 @@ def write_new_question(session, new_question):
 session = create_session(db_url)
 
 write_new_question(session, new_question)
-
-# TODO: Setup write of new question from the LLM response
-
 
 
 ## WRITE RESONSES TO DATABASE ##
