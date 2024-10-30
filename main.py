@@ -5,7 +5,7 @@
 # TODO: Setup Orchestration (grab previous questions from database, write new question to database, build email, send email, grab responses from email service)
 
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
-sendgrid_list = ''
+sendgrid_list = os.environ['SENDGRID_LIST']
 
 # new_question = get_claude_question(formatted_prompt)
 # TODO: How to get question_temo_id
