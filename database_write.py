@@ -5,11 +5,6 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from question_gen import new_question
-
-## SETUP DATABASE CONNECTION ##
-db_url = os.environ.get('DATABASE_URL')
-
 
 def create_session(db_url):
     """
@@ -36,10 +31,12 @@ class Question(setup_base_class()):
     question_date = Column(Date, default=date.today)
     created_at = Column(DateTime, default=datetime.now)
 
-def write_new_question(session, new_question):
+def write_new_question(new_question):
     """
     Writes newly generated question to the database.
     """
+    db_url = os.environ.get('DATABASE_URL')
+    session = create_session(db_url)
     new_question_details = Question(question_text=new_question)
     session.add(new_question_details)
     session.commit()
@@ -49,9 +46,7 @@ def write_new_question(session, new_question):
 ## WRITE NEW QUESTION TO DATABASE ##
 
 # Create a session
-session = create_session(db_url)
 
-write_new_question(session, new_question)
 
 
 ## WRITE RESONSES TO DATABASE ##

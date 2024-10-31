@@ -1,14 +1,20 @@
-# Main file for the app
+from question_gen import get_claude_question
+from database_write import write_new_question
 
-# TODO: Setup LLM Flow
-# TODO: Setup LLM prompt with previous questions from database
-# TODO: Setup Orchestration (grab previous questions from database, write new question to database, build email, send email, grab responses from email service)
 
-SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
-sendgrid_list = os.environ['SENDGRID_LIST']
+new_question, question_temp_id = get_claude_question()
+print(new_question)
+print(question_temp_id)
 
-# new_question = get_claude_question(formatted_prompt)
-# TODO: How to get question_temo_id
+write_new_question(new_question)
+
+
+
+
+
+# TODO: Setup email builder (HTML, get emails from fetch_emails)
+#SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+#sendgrid_list = os.environ['SENDGRID_LIST']
 # send_email(SENDGRID_API_KEY, sendgrid_list, new_question)
 # (Wrap these in a cron)
 

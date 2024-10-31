@@ -8,11 +8,8 @@ from sqlalchemy.orm import sessionmaker
 
 ## GET PREVIOUS QUESTIONS FROM DATABASE ##
 
-# Setup Database Connection
 
-
-
-def create_session(db_url):
+def create_session():
     """
     Create a database session.
     """
@@ -28,45 +25,39 @@ def setup_base_class():
     """
     return declarative_base()
 
+class Question(setup_base_class()):
+    __tablename__ = 'questions'
+    __table_args__ = {'schema': 'couples_journal'}
 
-def get_previous_questions(session, start_date):
+    question_id = Column(Integer, primary_key=True)
+    question_text = Column(String)
+    question_date = Column(Date)
+    created_at = Column(DateTime)
+
+def get_previous_questions():
     """
     Retrieve questions from the database from a given start date.
     """
-    class Question(setup_base_class()):
-        __tablename__ = 'questions'
-
-        question_id = Column(Integer, primary_key=True)
-        question_text = Column(String)
-        question_date = Column(Date)
-        created_at = Column(DateTime)
-        schema = 'couples_journal'
-        
+    session = create_session()
+    start_date = datetime.now().date() - timedelta(days=365)
+       
     questions = session.query(Question).filter(Question.question_date > start_date).all()
+    question_temp_id = max(question.question_id for question in questions) + 1
     session.close()
-    return questions
+    return questions, question_temp_id
 
 
-def format_questions(questions):
+def format_questions():
     """
     Format questions into a single string.
     """
-    return '; '.join([question.question_text for question in questions])
+    questions, question_temp_id = get_previous_questions()
+    return '; '.join(question.question_text for question in questions), question_temp_id
 
+def create_formatted_prompt():
 
-# Create a session
-session = create_session(db_url)
-
-# Get the current date
-one_year_ago = datetime.now().date() - timedelta(days=365)
-
-# Fetch and format previous questions
-question_data = get_previous_questions(session, one_year_ago)
-previous_questions = format_questions(question_data)
-question_temp_id = max(question.question_id for question in question_data) + 1
-
-# TODO: Need to call previous questions inside of this instead of passing it in
-def create_formatted_prompt(previous_questions)
+    previous_questions, question_temp_id = format_questions()
+    # This is the prompt that will be used to generate the new question includes a placeholder for the previous questions
     question_gen_prompt = '''You are an insightful and creative relationship coach tasked with generating a daily question for a married couple with two children. Your goal is to create questions that strengthen their bond, spark meaningful conversations, and add an element of fun or reflection to their day. 
 
     The couple's profile:
@@ -88,32 +79,22 @@ def create_formatted_prompt(previous_questions)
     {previous_questions}
 
     Generate a fresh, unique question that will resonate with this couple and enhance their daily connection. Do not include any text besides he question.'''
-    
-    return formatted_prompt = question_gen_prompt.format(previous_questions=previous_questions)
+    formatted_prompt = question_gen_prompt.format(previous_questions=previous_questions)
+    return formatted_prompt, question_temp_id
     
 
 ## SEND QUESTION TO LLM ##
-
-
-# This is the prompt that will be used to generate the new question includes a placeholder for the previous questions
-
-
-
 def get_claude_question():
-  """
-  Give Claude the formatted prompt and get a question back.
-  """
-    formatted_prompt = create_formatted_prompt()
+    """
+    Give Claude the formatted prompt and get a question back.
+    """
+    formatted_prompt, question_temp_id = create_formatted_prompt()
     claude_client = Anthropic()
     message = claude_client.messages.create(model = "claude-3-5-sonnet-20240620",
             max_tokens=1024,
             temperature=0.7,
             messages=[{"role": "user", "content": formatted_prompt,}],
   )
-    return message.content[0].text
-
-# Insert previous questions into prompt
+    return message.content[0].text, question_temp_id
 
 
-# Get the new question
-new_question = get_claude_question()
