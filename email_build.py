@@ -46,10 +46,10 @@ def get_contact_emails_from_list_name(api_key, list_name):
         return []
 
 
-def send_email(SENDGRID_API_KEY, sendgrid_list, new_question, question_tem_id)
-    recipents = get_contact_emails_from_list_name(SENDGRID_API_KEY, sendgrid_list)
+def send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL, new_question, question_temp_id)
+    recipients = get_contact_emails_from_list_name(SENDGRID_API_KEY, sendgrid_list)
     message = Mail(
-      from_email='',  # This needs to match an email that you have verified with SendGrid
+      from_email=SENDGRID_EMAIL,  # This needs to match an email that you have verified with SendGrid
       to_emails='',  # Put your email here so that you receive it when sent to the BCC'd recipients .
       subject=f"Today's Couples Question ({question_temp_id})",  # The subject for the email
       html_content={new_question}
@@ -69,4 +69,3 @@ def send_email(SENDGRID_API_KEY, sendgrid_list, new_question, question_tem_id)
       if hasattr(e, 'body'):
           print(e.body)
 
-#TODO: Figure out how to get the new question without trigger the entire flow again (probably just save as a variable in main and put before this call
