@@ -1,1 +1,0 @@
-# TODO: Get BCC code from newsletter code

@@ -67,7 +67,7 @@ def create_formatted_prompt():
     - They enjoy outdoor activities, sports, date nights, trips, dining out, and sharing drinks together
     - They value quality time and shared experiences
 
-    Generate a single, thought-provoking question that this couple can discuss together. The question should be engaging, insightful, and tailored to their lifestyle. It can range from deeply introspective to lighthearted and fun. Aim to create variety in the types of questions you generate.
+    Generate a single, thought-provoking question that this couple can discuss together. The question should be engaging, insightful, and tailored to their lifestyle. It can range from deeply introspective to lighthearted and fun. This is a married couple, so intimate or spicy questions are okay as well. Aim to create variety in the types of questions you generate.
 
     Your question should:
     1. Encourage open communication
