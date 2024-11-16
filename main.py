@@ -19,9 +19,13 @@ write_new_question(new_question)
 
 send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL, new_question, question_temp_id)
 
-# (Wrap these in a cron)
+# (Wrap ⬆️ these in a cron)
 
 
 # grab email responses
 # (Wrap this in a seperate cron)
 
+
+
+
+# TODOs:
