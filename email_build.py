@@ -1,4 +1,3 @@
-# TODO: Setup email builder (HTML, get emails from fetch_emails)
 import json
 import os 
 
@@ -6,6 +5,7 @@ from sendgrid import SendGridAPIClient
 
 from sendgrid.helpers.mail import Mail
 
+# Get emails from Sendgrid using list name lookuo
 def get_contact_emails_from_list_name(api_key, list_name):
     """
     :param str api_key: Your Sendgrid API KEY
@@ -48,6 +48,7 @@ def get_contact_emails_from_list_name(api_key, list_name):
         return []
 
 
+# Send the email that contains the new question
 def send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL, new_question, question_temp_id):
     recipients = get_contact_emails_from_list_name(SENDGRID_API_KEY, sendgrid_list)
     message = Mail(

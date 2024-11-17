@@ -9,14 +9,16 @@ SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
 sendgrid_list = os.environ['SENDGRID_LIST']
 SENDGRID_EMAIL = os.environ['SENDGRID_EMAIL']
 
+# Get the new question from Claude and generate a temp id for use in matching responses
 new_question, question_temp_id = get_claude_question()
 print(new_question)
 print(question_temp_id)
 
+# Write the new question to the database
 write_new_question(new_question)
 
 
-
+# Send the new question to the email list
 send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL, new_question, question_temp_id)
 
 # (Wrap ⬆️ these in a cron)

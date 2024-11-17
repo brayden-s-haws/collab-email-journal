@@ -6,8 +6,6 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-## GET PREVIOUS QUESTIONS FROM DATABASE ##
-
 
 def create_session():
     """
@@ -25,6 +23,8 @@ def setup_base_class():
     """
     return declarative_base()
 
+
+# Define the question class for the database
 class Question(setup_base_class()):
     __tablename__ = 'questions'
     __table_args__ = {'schema': 'couples_journal'}
@@ -33,6 +33,7 @@ class Question(setup_base_class()):
     question_text = Column(String)
     question_date = Column(Date)
     created_at = Column(DateTime)
+
 
 def get_previous_questions():
     """
@@ -49,13 +50,16 @@ def get_previous_questions():
 
 def format_questions():
     """
-    Format questions into a single string.
+    Format the retrieved questions into a single string.
     """
     questions, question_temp_id = get_previous_questions()
     return '; '.join(question.question_text for question in questions), question_temp_id
 
-def create_formatted_prompt():
 
+def create_formatted_prompt():
+    """
+    Create a formatted prompt for the Anthropic API. Inserts the retrieved questions into the prompt.
+    """
     previous_questions, question_temp_id = format_questions()
     # This is the prompt that will be used to generate the new question includes a placeholder for the previous questions
     question_gen_prompt = '''You are an insightful and creative relationship coach tasked with generating a daily question for a married couple with two children. Your goal is to create questions that strengthen their bond, spark meaningful conversations, and add an element of fun or reflection to their day. 
@@ -83,7 +87,7 @@ def create_formatted_prompt():
     return formatted_prompt, question_temp_id
     
 
-## SEND QUESTION TO LLM ##
+# Get a new question from Claude and generate a temp id for use in matching responses
 def get_claude_question():
     """
     Give Claude the formatted prompt and get a question back.

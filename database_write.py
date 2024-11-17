@@ -21,7 +21,7 @@ def setup_base_class():
     """
     return declarative_base()
 
-
+# Define the question class for the database
 class Question(setup_base_class()):
     __tablename__ = 'questions'
     __table_args__ = {'schema': 'couples_journal'}
@@ -31,6 +31,7 @@ class Question(setup_base_class()):
     question_date = Column(Date, default=date.today)
     created_at = Column(DateTime, default=datetime.now)
 
+# Write the new question to the database
 def write_new_question(new_question):
     """
     Writes newly generated question to the database.
@@ -41,13 +42,6 @@ def write_new_question(new_question):
     session.add(new_question_details)
     session.commit()
     session.close()
-
-
-## WRITE NEW QUESTION TO DATABASE ##
-
-# Create a session
-
-
 
 ## WRITE RESONSES TO DATABASE ##
 # TODO: Setup write of responses to the database
