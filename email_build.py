@@ -1,16 +1,18 @@
-# TODO: Setup email builder (HTML, get emails from fetch_emails)
 import json
 import os 
 
-import sendgrid
+from sendgrid import SendGridAPIClient
 
+from sendgrid.helpers.mail import Mail
+
+# Get emails from Sendgrid using list name lookuo
 def get_contact_emails_from_list_name(api_key, list_name):
     """
     :param str api_key: Your Sendgrid API KEY
     :param str list_name: The contact list you wish to send the email to
     :return: list
     """
-    sg = sendgrid.SendGridAPIClient(api_key=api_key)
+    sg = SendGridAPIClient(api_key=api_key)
 
     try:
         # Fetch all lists
@@ -46,13 +48,14 @@ def get_contact_emails_from_list_name(api_key, list_name):
         return []
 
 
-def send_email(SENDGRID_API_KEY, sendgrid_list, new_question, question_tem_id)
-    recipents = get_contact_emails_from_list_name(SENDGRID_API_KEY, sendgrid_list)
+# Send the email that contains the new question
+def send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL, new_question, question_temp_id):
+    recipients = get_contact_emails_from_list_name(SENDGRID_API_KEY, sendgrid_list)
     message = Mail(
-      from_email='',  # This needs to match an email that you have verified with SendGrid
-      to_emails='',  # Put your email here so that you receive it when sent to the BCC'd recipients .
+      from_email=SENDGRID_EMAIL,  # This needs to match an email that you have verified with SendGrid
+      to_emails=SENDGRID_EMAIL,  # Put your email here so that you receive it when sent to the BCC'd recipients .
       subject=f"Today's Couples Question ({question_temp_id})",  # The subject for the email
-      html_content={new_question}
+      html_content=new_question
     )
     # Add each email as BCC
     for email in recipients:
@@ -69,4 +72,3 @@ def send_email(SENDGRID_API_KEY, sendgrid_list, new_question, question_tem_id)
       if hasattr(e, 'body'):
           print(e.body)
 
-#TODO: Figure out how to get the new question without trigger the entire flow again (probably just save as a variable in main and put before this call
