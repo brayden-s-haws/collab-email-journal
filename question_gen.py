@@ -94,7 +94,7 @@ def get_claude_question():
     """
     formatted_prompt, question_temp_id = create_formatted_prompt()
     claude_client = Anthropic()
-    message = claude_client.messages.create(model = "claude-3-5-sonnet-20240620",
+    message = claude_client.messages.create(model = "claude-3-5-sonnet-20241022",
             max_tokens=1024,
             temperature=0.7,
             messages=[{"role": "user", "content": formatted_prompt,}],
