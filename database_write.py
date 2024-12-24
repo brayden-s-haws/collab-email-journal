@@ -44,4 +44,5 @@ def write_new_question(new_question):
     session.close()
 
 ## WRITE RESONSES TO DATABASE ##
-# TODO: Setup write of responses to the database
+    # TODO: Define a class for the reponse
+    # TODO: Setup write of responses to the database
