@@ -49,7 +49,7 @@ def get_contact_emails_from_list_name(api_key, list_name):
 
 
 # Send the email that contains the new question
-def send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_CC, new_question, question_temp_id):
+def send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_CC, SENDGRID_EMAIL_RESPONSE, new_question, question_temp_id):
     recipients = get_contact_emails_from_list_name(SENDGRID_API_KEY, sendgrid_list)
     message = Mail(
       from_email=SENDGRID_EMAIL_FROM,  # This needs to match an email that you have verified with SendGrid
@@ -57,6 +57,8 @@ def send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL_FROM, SENDGRID_EM
       subject=f"Today's Couples Question ({question_temp_id})",  # The subject for the email
       html_content=new_question
     )
+    message.reply_to = SENDGRID_EMAIL_RESPONSE
+
     # Add each email as BCC
     for email in recipients:
       message.add_bcc(email)
