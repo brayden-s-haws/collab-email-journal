@@ -26,7 +26,7 @@ send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_
 
 
 # grab email responses
-# (Wrap this in a seperate cron)
+# (use webhook)
 
 
 
