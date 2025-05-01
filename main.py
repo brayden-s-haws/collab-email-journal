@@ -16,7 +16,6 @@ SENDGRID_EMAIL_CC = os.environ['SENDGRID_EMAIL_CC']
 SENDGRID_EMAIL_RESPONSE = os.environ['SENDGRID_EMAIL_RESPONSE']
 
 def email_flow():
-  
   # Get the new question from Claude and generate a temp id for use in matching responses
   new_question, question_temp_id = get_claude_question()
   print(new_question)
@@ -30,8 +29,16 @@ def email_flow():
   send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_RESPONSE, SENDGRID_EMAIL_CC, new_question, question_temp_id)
 
 # Schedule the email to be sent on a schedule
-mountain_timezone = pytz.timezone('US/Mountain')
-schedule.every().sunday.at("09:00").do(email_flow)
+mountain_timezone = str(pytz.timezone('US/Mountain'))
+schedule.every().sunday.at("19:38", mountain_timezone).do(email_flow)
+
+def run_scheduler():
+    while True:
+        print("Checking for scheduled tasks...")
+        schedule.run_pending()
+        time.sleep(60)
+
+run_scheduler()
 
 
 # (Wrap ⬆️ these in a cron)
