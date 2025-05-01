@@ -49,8 +49,8 @@ def get_contact_emails_from_list_name(api_key, list_name):
 
 
 # Send the email that contains the new question
-def send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_CC, SENDGRID_EMAIL_RESPONSE, new_question, question_temp_id):
-    recipients = get_contact_emails_from_list_name(SENDGRID_API_KEY, sendgrid_list)
+def send_email(SENDGRID_API_KEY, SENDGRID_LIST, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_CC, SENDGRID_EMAIL_RESPONSE, new_question, question_temp_id):
+    recipients = get_contact_emails_from_list_name(SENDGRID_API_KEY, SENDGRID_LIST)
     message = Mail(
       from_email=SENDGRID_EMAIL_FROM,  # This needs to match an email that you have verified with SendGrid
       to_emails=SENDGRID_EMAIL_CC,  # Put your email here so that you receive it when sent to the BCC'd recipients .

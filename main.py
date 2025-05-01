@@ -12,7 +12,7 @@ from response_fetch import start_webhook_server
 
 # Environment variables
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
-sendgrid_list = os.environ['SENDGRID_LIST']
+SENDGRID_LIST = os.environ['SENDGRID_LIST']
 SENDGRID_EMAIL_FROM = os.environ['SENDGRID_EMAIL_FROM']
 SENDGRID_EMAIL_CC = os.environ['SENDGRID_EMAIL_CC']
 SENDGRID_EMAIL_RESPONSE = os.environ['SENDGRID_EMAIL_RESPONSE']
@@ -28,7 +28,7 @@ def email_flow():
   write_new_question(new_question)
   
   # Send the new question to the email list
-  send_email(SENDGRID_API_KEY, sendgrid_list, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_RESPONSE, SENDGRID_EMAIL_CC, new_question, question_temp_id)
+  send_email(SENDGRID_API_KEY, SENDGRID_LIST, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_RESPONSE, SENDGRID_EMAIL_CC, new_question, question_temp_id)
 
 # Schedule the email to be sent on a schedule
 mountain_timezone = pytz.timezone('US/Mountain')
