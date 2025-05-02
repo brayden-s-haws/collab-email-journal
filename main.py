@@ -1,7 +1,7 @@
 import os
 import schedule
 import time
-import datetime
+from datetime import datetime
 import pytz
 import threading
 
@@ -44,7 +44,7 @@ def timezone_schedule(target_timezone_string, target_time_str, function):
     if abs((now-target_time).total_seconds()) < 60:
         function()
 
-schedule.every().sunday.at(":00").do(timezone_schedule, mountain_timezone, '19:30', email_flow)
+schedule.every().thursday.at('00:00').do(timezone_schedule, mountain_timezone, '19:33', email_flow)
 
 
 def run_scheduler():
