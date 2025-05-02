@@ -25,9 +25,9 @@ def webhook():
   Fetch the email responses from the webhook.
   """
   # Extract the email data from the request
-  user_email = request.form.get['from']
-  subject = request.form.get['subject']
-  text = request.form.get['text']
+  user_email = request.form.get('from')
+  subject = request.form.get('subject')
+  text = request.form.get('text')
 
   # Extract the response and question ID from the email
   question_id, response_text = extract_response_from_email(subject, text)
