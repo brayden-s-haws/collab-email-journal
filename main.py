@@ -1,6 +1,7 @@
 import os
 import schedule
 import time
+import datetime
 import pytz
 import threading
 
@@ -32,7 +33,19 @@ def email_flow():
 
 # Schedule the email to be sent on a schedule
 mountain_timezone = pytz.timezone('US/Mountain')
-schedule.every().sunday.at("19:38").do(email_flow)
+
+def timezone_schedule(target_timezone_string, target_time_str, function):
+    target_timezone = pytz.timezone(target_timezone_string)
+    hour, minute = map(int, target_time_str.split(':'))
+
+    now = datetime.now(target_timezone)
+    target_time = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+
+    if abs((now-target_time).total_seconds()) < 60:
+        function()
+
+schedule.every().sunday.at(":00").do(timezone_schedule, mountain_timezone, '19:30', email_flow)
+
 
 def run_scheduler():
     while True:
