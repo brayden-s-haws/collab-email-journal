@@ -29,7 +29,7 @@ def email_flow():
   write_new_question(new_question)
   
   # Send the new question to the email list
-  send_email(SENDGRID_API_KEY, SENDGRID_LIST, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_RESPONSE, SENDGRID_EMAIL_CC, new_question, question_temp_id)
+  send_email(SENDGRID_API_KEY, SENDGRID_LIST, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_CC, SENDGRID_EMAIL_RESPONSE, new_question, question_temp_id)
 
 # Schedule the email to be sent on a schedule
 mountain_timezone = pytz.timezone('US/Mountain')
