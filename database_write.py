@@ -48,7 +48,7 @@ class Response(setup_base_class()):
     __tablename__ = 'responses'
     __table_args__ = {'schema': 'couples_journal'}
 
-    response_id = Column(Integer, primary_key=True, autoincrement=True)
+    response_id = Column(Integer, primary_key=True)
     user_email = Column(String)
     question_id = Column(Integer)
     response_text = Column(String)
