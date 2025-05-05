@@ -20,7 +20,7 @@ def extract_response_from_email(subject, text):
 
 
 @app.route('/email/webhook', methods=['POST'])
-def webhook():
+def response_webhook():
   """
   Fetch the email responses from the webhook.
   """
@@ -38,7 +38,7 @@ def webhook():
   # Return a response to acknowledge receipt of the email
   return "OK", 200
 
-def start_webhook_server():
+def start_email_webhook_server():
     """
     Start the webhook server.
     """

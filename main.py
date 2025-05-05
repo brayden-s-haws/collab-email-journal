@@ -9,7 +9,7 @@ from email_build import send_email
 from question_gen import get_claude_question
 from database_write import write_new_question
 from email_build import send_email
-from response_fetch import start_webhook_server
+from response_fetch import start_email_webhook_server
 
 # Environment variables
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
@@ -47,7 +47,7 @@ def email_send_scheduler():
       print("Resetting email_sent_this_week flag.")
       email_sent_this_week = False
   
-    if now.weekday() == 5 and now.hour == 20 and now.minute >= 24 and now.minute < 24:
+    if now.weekday() == 6 and now.hour == 19 and now.minute >= 20 and now.minute < 20:
           print("Running email flow...")
           email_flow()
           email_sent_this_week = True
@@ -56,7 +56,7 @@ def email_send_scheduler():
 
 # Start the scheduler and webhook server in separate threads
 email_schedule_thread = threading.Thread(target=email_send_scheduler)
-webhook_thread = threading.Thread(target=start_webhook_server)
+webhook_thread = threading.Thread(target=start_email_webhook_server)
 email_schedule_thread.start()
 webhook_thread.start()
 
