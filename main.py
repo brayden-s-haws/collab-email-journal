@@ -47,7 +47,7 @@ def email_send_scheduler():
       print("Resetting email_sent_this_week flag.")
       email_sent_this_week = False
   
-    if now.weekday() == 6 and now.hour == 19 and now.minute >= 20 and now.minute < 20:
+    if now.weekday() == 6 and now.hour == 19 and now.minute >= 47 and now.minute < 48:
           print("Running email flow...")
           email_flow()
           email_sent_this_week = True

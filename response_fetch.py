@@ -5,6 +5,14 @@ from database_write import write_new_response
 
 app = Flask(__name__)
 
+# TODO: Move this to a config file
+@app.route('/', methods=['GET'])
+def index():
+    """
+    Simple handler for the root path to avoid 404 errors.
+    """
+    return "Couples Journal API is running", 200
+
 def extract_response_from_email(subject, text):
     """
     Extract the response and question ID from the email.
@@ -19,24 +27,30 @@ def extract_response_from_email(subject, text):
     return question_id, response_text
 
 
-@app.route('/email/webhook', methods=['POST'])
+@app.route('/email/webhook', methods=['GET', 'POST'])
 def response_webhook():
   """
   Fetch the email responses from the webhook.
   """
-  # Extract the email data from the request
-  user_email = request.form.get('from')
-  subject = request.form.get('subject')
-  text = request.form.get('text')
-
-  # Extract the response and question ID from the email
-  question_id, response_text = extract_response_from_email(subject, text)
-
-  # Write the response to the database
-  write_new_response(user_email, question_id, response_text)
-
-  # Return a response to acknowledge receipt of the email
-  return "OK", 200
+  # Check if the request is a GET request
+  if request.method == 'GET':
+      return "Webhook is running", 200
+      
+  # Check if the request is a POST request
+  elif request.method == 'POST':
+      # Extract the email data from the request
+      user_email = request.form.get('from')
+      subject = request.form.get('subject')
+      text = request.form.get('text')
+    
+      # Extract the response and question ID from the email
+      question_id, response_text = extract_response_from_email(subject, text)
+    
+      # Write the response to the database
+      write_new_response(user_email, question_id, response_text)
+    
+      # Return a response to acknowledge receipt of the email
+      return "OK", 200
 
 def start_email_webhook_server():
     """
