@@ -33,7 +33,7 @@ def email_flow():
 
 # Schedule the email to be sent on a schedule
 def email_schedule():
-  schedule.every().thursday.at("02:06").do(email_flow)
+  schedule.every().sunday.at("05:30").do(email_flow)
   print("Email flow scheduled to run.")
   while True:
     schedule.run_pending()
