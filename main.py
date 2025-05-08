@@ -32,30 +32,16 @@ def email_flow():
   send_email(SENDGRID_API_KEY, SENDGRID_LIST, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_CC, SENDGRID_EMAIL_RESPONSE, new_question, question_temp_id)
 
 # Schedule the email to be sent on a schedule
-
-
-def email_send_scheduler():
-  email_sent_this_week = False
-  last_day_checked = -1
-
+def email_schedule():
+  schedule.every().thursday.at("02:06").do(email_flow)
+  print("Email flow scheduled to run.")
   while True:
-    mountain_timezone = pytz.timezone('US/Mountain')
-    now = datetime.now(mountain_timezone)
-    print(f"Current time in Mountain Time: {now}")
-
-    if now.weekday() == 0 and last_day_checked != 0:
-      print("Resetting email_sent_this_week flag.")
-      email_sent_this_week = False
-  
-    if now.weekday() == 6 and now.hour == 19 and now.minute >= 47 and now.minute < 48:
-          print("Running email flow...")
-          email_flow()
-          email_sent_this_week = True
-  
-    time.sleep(5)
+    schedule.run_pending()
+    print("Email flow running.")
+    time.sleep(30)
 
 # Start the scheduler and webhook server in separate threads
-email_schedule_thread = threading.Thread(target=email_send_scheduler)
+email_schedule_thread = threading.Thread(target=email_schedule)
 webhook_thread = threading.Thread(target=start_email_webhook_server)
 email_schedule_thread.start()
 webhook_thread.start()
