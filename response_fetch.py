@@ -42,7 +42,12 @@ def response_webhook():
       user_email = request.form.get('from')
       subject = request.form.get('subject')
       text = request.form.get('text')
-    
+      body = request.form.get('hmtl')
+      print(user_email)
+      print(subject)
+      print(text)
+      print(body)
+      
       # Extract the response and question ID from the email
       question_id, response_text = extract_response_from_email(subject, text)
     
