@@ -13,7 +13,7 @@ def index():
     """
     return "Couples Journal API is running", 200
 
-def extract_response_from_email(subject, text):
+def extract_response_from_email(subject, email_content):
     """
     Extract the response and question ID from the email.
     """
@@ -23,7 +23,8 @@ def extract_response_from_email(subject, text):
 
     # Extract the response from the email text
     response_text =  text.strip()if text else None
-
+    #TODO update this to extract just the piece we want
+    
     return question_id, response_text
 
 
@@ -41,15 +42,11 @@ def response_webhook():
       # Extract the email data from the request
       user_email = request.form.get('from')
       subject = request.form.get('subject')
-      text = request.form.get('text')
-      body = request.form.get('hmtl')
-      print(user_email)
-      print(subject)
-      print(text)
-      print(body)
+      email_content = request.from.get('email')
+      
       
       # Extract the response and question ID from the email
-      question_id, response_text = extract_response_from_email(subject, text)
+      question_id, response_text = extract_response_from_email(subject, email_content)
     
       # Write the response to the database
       write_new_response(user_email, question_id, response_text)
