@@ -22,9 +22,11 @@ def extract_response_from_email(subject, email_content):
     question_id = int(question_id_search.group(1)) if question_id_search else None
 
     # Extract the response from the email text
-    text_match =  re.search(r'Content-Type: text/plain;.*?Content-Transfer-Encoding:[^\r\n]*\r\n\r\n(.*?)(?:\r\n\r\n----==|$)', email_content, re.DOTALL') else None
+    text_match =  re.search(r'Content-Type: text/plain;.*?Content-Transfer-Encoding:[^\r\n]*\r\n\r\n(.*?)(?:\r\n\r\n----==|$)', email_content, re.DOTALL)
 
-    response_text = text_match.group(1) if text_match else None
+    remove_history =  text_match.split('On ')[0] if text_match else None
+    
+    response_text = remove_history.group(1) if remove_history else None
     print(response_text)
     
     return question_id, response_text
@@ -42,9 +44,10 @@ def response_webhook():
   # Check if the request is a POST request
   elif request.method == 'POST':
       # Extract the email data from the request
-      user_email = request.form.get('from')
+      raw_user_email = request.form.get('from')
+      user_email = raw_user_email.split('<')[1].split('>')[0]
       subject = request.form.get('subject')
-      email_content = request.from.get('email')
+      email_content = request.form.get('email')
       
       
       # Extract the response and question ID from the email
