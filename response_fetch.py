@@ -24,9 +24,8 @@ def extract_response_from_email(subject, email_content):
     # Extract the response from the email text
     text_match =  re.search(r'Content-Type: text/plain;.*?Content-Transfer-Encoding:[^\r\n]*\r\n\r\n(.*?)(?:\r\n\r\n----==|$)', email_content, re.DOTALL)
 
-    remove_history =  text_match.split('On ')[0] if text_match else None
+    response_text =  text_match.group(1).split('On ')[0] if text_match else None
     
-    response_text = remove_history.group(1) if remove_history else None
     print(response_text)
     
     return question_id, response_text
