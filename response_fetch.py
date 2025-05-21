@@ -22,8 +22,10 @@ def extract_response_from_email(subject, email_content):
     question_id = int(question_id_search.group(1)) if question_id_search else None
 
     # Extract the response from the email text
-    response_text =  text.strip()if text else None
-    #TODO update this to extract just the piece we want
+    text_match =  re.search(r'Content-Type: text/plain;.*?Content-Transfer-Encoding:[^\r\n]*\r\n\r\n(.*?)(?:\r\n\r\n----==|$)', email_content, re.DOTALL') else None
+
+    response_text = text_match.group(1) if text_match else None
+    print(response_text)
     
     return question_id, response_text
 
