@@ -1,6 +1,6 @@
 import os
 import re
-from flask import Flask, request
+from flask import Flask, request, render_template
 from database_write import write_new_response
 
 app = Flask(__name__)
@@ -9,8 +9,6 @@ app = Flask(__name__)
 @app.route('/ui')
 def ui():
     return render_template('index.html')
-
-
 
 
 # TODO: Move this to a config file
