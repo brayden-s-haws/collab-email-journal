@@ -6,6 +6,14 @@ from database_write import write_new_response
 app = Flask(__name__)
 
 # TODO: Move this to a config file
+@app.route('/ui')
+def ui():
+    return render_template('index.html')
+
+
+
+
+# TODO: Move this to a config file
 @app.route('/', methods=['GET'])
 def index():
     """
