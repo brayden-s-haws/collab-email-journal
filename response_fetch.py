@@ -76,7 +76,7 @@ def response_webhook():
           return "OK", 200
       else:
           print("Unauthorized email address:", user_email)
-          return "Unauthorized", 401
+          return "Email not in allowed list", 403
           
 
 def start_email_webhook_server():
