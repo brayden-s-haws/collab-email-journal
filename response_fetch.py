@@ -3,7 +3,7 @@ import re
 from flask import Flask, request, render_template
 from database_write import write_new_response
 from email_build import get_contact_emails_from_list_name
-from main import SENDGRID_API_KEY, SENDGRID_LIST
+
 
 
 app = Flask(__name__)
@@ -57,7 +57,13 @@ def response_webhook():
       subject = request.form.get('subject')
       email_content = request.form.get('email')
 
-      allowed_emails = get_contact_emails_from_list_name(SENDGRID_API_KEY, SENDGRID_LIST)
+      def check_emails():
+          # Check if the email is in the allowed list
+          from main import SENDGRID_API_KEY, SENDGRID_LIST
+          allowed_emails = get_contact_emails_from_list_name(SENDGRID_API_KEY, SENDGRID_LIST)
+          return allowed_emails
+          
+      allowed_emails = check_emails()
       
       if user_email in allowed_emails:
           # Extract the response and question ID from the email
@@ -69,7 +75,9 @@ def response_webhook():
           # Return a response to acknowledge receipt of the email
           return "OK", 200
       else:
+          print("Unauthorized email address:", user_email)
           return "Unauthorized", 401
+          
 
 def start_email_webhook_server():
     """
