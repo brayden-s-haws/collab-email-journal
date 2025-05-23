@@ -73,3 +73,5 @@ INSERT INTO  schema_name.users
 VALUES 
 ('','','',CURRENT_TIMESTAMP);
 
+## Inbound Webhook Setup
+details on setting up sendgrid inbound webhook

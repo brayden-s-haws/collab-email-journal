@@ -43,6 +43,26 @@ def write_new_question(new_question):
     session.commit()
     session.close()
 
-## WRITE RESONSES TO DATABASE ##
-    # TODO: Define a class for the reponse
-    # TODO: Setup write of responses to the database
+# Define the response class for the database
+class Response(setup_base_class()):
+    __tablename__ = 'responses'
+    __table_args__ = {'schema': 'couples_journal'}
+
+    response_id = Column(Integer, primary_key=True)
+    user_email = Column(String)
+    question_id = Column(Integer)
+    response_text = Column(String)
+    response_date = Column(Date, default=date.today)
+    created_at = Column(DateTime, default=datetime.now)
+    
+# Write the new response to the database
+def write_new_response(user_email, question_id, response_text):
+    """
+    Writes newly generated response to the database.
+    """
+    db_url = os.environ.get('DATABASE_URL')
+    session = create_session(db_url)
+    new_response_details = Response(user_email=user_email, question_id=question_id, response_text=response_text)
+    session.add(new_response_details)
+    session.commit()
+    session.close()
