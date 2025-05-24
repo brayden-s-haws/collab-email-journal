@@ -76,7 +76,7 @@ def response_webhook():
           return "OK", 200
       else:
           print("Unauthorized email address:", user_email)
-          return "Email not in allowed list", 403
+          return "Email not in allowed list", 200 # Return 200 to avoid retrying the webhook, should be 403 but Sendgrid doesn't support it
           
 
 def start_email_webhook_server():
