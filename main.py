@@ -10,6 +10,7 @@ from question_gen import get_claude_question
 from database_write import write_new_question
 from email_build import send_email
 from response_fetch import start_email_webhook_server
+from config import question_gen_prompt
 
 # Environment variables
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
@@ -21,7 +22,7 @@ SENDGRID_EMAIL_RESPONSE = os.environ['SENDGRID_EMAIL_RESPONSE']
 # Configure the email flow
 def email_flow():
   # Get the new question from Claude and generate a temp id for use in matching responses
-  new_question, question_temp_id = get_claude_question()
+  new_question, question_temp_id = get_claude_question(question_gen_prompt)
   print(new_question)
   print(question_temp_id)
   
@@ -33,7 +34,7 @@ def email_flow():
 
 # Schedule the email to be sent on a schedule
 def email_schedule():
-  schedule.every().sunday.at("05:30").do(email_flow)
+  schedule.every().wednesday.at("02:05").do(email_flow)
   print("Email flow scheduled to run.")
   while True:
     schedule.run_pending()
