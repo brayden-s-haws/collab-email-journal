@@ -1,8 +1,26 @@
+from flask import Flask
 
 
+# Flask app setup
+app = Flask(__name__)
+
+# Start the webhook server
+def start_email_webhook_server():
+  """
+  Start the webhook server.
+  """
+  app.run(host ='0.0.0.0', debug=True, port=5000, use_reloader= False, threaded=True)
+
+# Route to confirm the webhook server is running
+@app.route('/', methods=['GET'])
+def index():
+    """
+    Simple handler for the root path to avoid 404 errors.
+    """
+    return "Couples Journal API is running", 200
 
 
-
+# Claude question generation prompt (Follow instructions in the README.md file to create a unique prompt for your use case)
 question_gen_prompt = '''You are an insightful and creative relationship coach tasked with generating a daily question for a married couple with two children. Your goal is to create questions that strengthen their bond, spark meaningful conversations, and add an element of fun or reflection to their day. 
 
 The couple's profile:
