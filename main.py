@@ -9,7 +9,6 @@ from email_build import send_email
 from question_gen import get_claude_question
 from database_write import write_new_question
 from email_build import send_email
-from response_fetch import 
 from config import start_email_webhook_server,question_gen_prompt
 
 # Environment variables

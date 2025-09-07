@@ -22,3 +22,6 @@ externalPort = 5000
 localPort = 8080
 externalPort = 8080
 exposeLocalhost = true
+
+[agent]
+expertMode = true
