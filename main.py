@@ -1,4 +1,3 @@
-import os
 import schedule
 import time
 from datetime import datetime
@@ -9,14 +8,10 @@ from email_build import send_email
 from question_gen import get_claude_question
 from database_write import write_new_question
 from email_build import send_email
-from config import start_email_webhook_server,question_gen_prompt
+from config import Config, start_email_webhook_server,question_gen_prompt
 
-# Environment variables
-SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
-SENDGRID_LIST = os.environ['SENDGRID_LIST']
-SENDGRID_EMAIL_FROM = os.environ['SENDGRID_EMAIL_FROM']
-SENDGRID_EMAIL_CC = os.environ['SENDGRID_EMAIL_CC']
-SENDGRID_EMAIL_RESPONSE = os.environ['SENDGRID_EMAIL_RESPONSE']
+
+
 
 # Configure the email flow
 def email_flow():
@@ -29,7 +24,7 @@ def email_flow():
   write_new_question(new_question)
   
   # Send the new question to the email list
-  send_email(SENDGRID_API_KEY, SENDGRID_LIST, SENDGRID_EMAIL_FROM, SENDGRID_EMAIL_CC, SENDGRID_EMAIL_RESPONSE, new_question, question_temp_id)
+  send_email(Config.SENDGRID_API_KEY, Config.SENDGRID_LIST, Config.SENDGRID_EMAIL_FROM, Config.SENDGRID_EMAIL_CC, Config.SENDGRID_EMAIL_RESPONSE, new_question, question_temp_id)
 
 # Schedule the email to be sent on a schedule
 def email_schedule():

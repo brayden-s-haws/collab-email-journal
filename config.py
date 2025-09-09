@@ -1,5 +1,18 @@
+import os
+
 from flask import Flask
 
+
+class Config:
+  # Sendgrid settings
+  SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+  SENDGRID_LIST = os.environ['SENDGRID_LIST']
+  SENDGRID_EMAIL_FROM = os.environ['SENDGRID_EMAIL_FROM']
+  SENDGRID_EMAIL_CC = os.environ['SENDGRID_EMAIL_CC']
+  SENDGRID_EMAIL_RESPONSE = os.environ['SENDGRID_EMAIL_RESPONSE']
+
+  #database settings
+  DATABASE_URL = os.environ['DATABASE_URL']
 
 # Flask app setup
 app = Flask(__name__)
