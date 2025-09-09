@@ -6,12 +6,14 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+from config import Config
+
 
 def create_session():
     """
     Create a database session.
     """
-    db_url = os.environ.get('DATABASE_URL')
+    db_url = Config.DATABASE_URL
     engine = create_engine(db_url, connect_args={'options': '-csearch_path=couples_journal'})
     Session = sessionmaker(bind=engine)
     return Session()

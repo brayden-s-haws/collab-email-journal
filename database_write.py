@@ -5,6 +5,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Date, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+from config import Config
+
 
 def create_session(db_url):
     """
@@ -36,7 +38,7 @@ def write_new_question(new_question):
     """
     Writes newly generated question to the database.
     """
-    db_url = os.environ.get('DATABASE_URL')
+    db_url = Config.DATABASE_URL
     session = create_session(db_url)
     new_question_details = Question(question_text=new_question)
     session.add(new_question_details)

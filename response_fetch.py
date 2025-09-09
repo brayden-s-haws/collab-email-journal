@@ -1,4 +1,3 @@
-import os
 import re
 from flask import Flask, request, render_template
 from database_write import write_new_response
@@ -42,8 +41,8 @@ def response_webhook():
 
       def check_emails():
           # Check if the email is in the allowed list
-          from main import SENDGRID_API_KEY, SENDGRID_LIST
-          allowed_emails = get_contact_emails_from_list_name(SENDGRID_API_KEY, SENDGRID_LIST)
+          from config import Config
+          allowed_emails = get_contact_emails_from_list_name(Config.SENDGRID_API_KEY, Config.SENDGRID_LIST)
           return allowed_emails
           
       allowed_emails = check_emails()
