@@ -16,6 +16,9 @@ Maintaining meaningful daily communication in busy relationships can be challeng
 The system uses AI to generate personalized questions based on the couple's interests and lifestyle, sends them via email at scheduled times, and processes responses through an automated webhook system. All questions and responses are stored in a database, creating a growing archive of the relationship's journey.
 
 ## How It Works
+This diagram provides a high-level view of how the system works:
+<img width="2544" height="1764" alt="CleanShot Freeform-2025-09-09" src="https://github.com/user-attachments/assets/5f268aab-e5e9-4297-90e7-70958c1d34c7" />
+
 The system orchestrates multiple services to create a seamless daily question experience:
 
 ```mermaid
