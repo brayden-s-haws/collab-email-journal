@@ -1,4 +1,4 @@
-# Couples Journal - Daily Question Email System
+# Collaborative Journal - Daily Question Email System
 
 #### Current status: Complete
 
@@ -11,9 +11,9 @@ ___
 * **What I want to learn next**: Refactoring this codebase to use proper Python patterns including classes, type hints, comprehensive logging, and test coverage. Also interested in adding a web interface for browsing past questions and responses
 
 ## Description
-Maintaining meaningful daily communication in busy relationships can be challenging. This Couples Journal system solves this by automatically generating and sending thoughtful daily questions via email, then capturing and storing responses to build a shared relationship journal over time.
+Maintaining meaningful daily communication in busy relationships can be challenging. This collaborative journal system solves this by automatically generating and sending daily questions via email, then capturing and storing responses to build a shared journal over time.
 
-The system uses AI to generate personalized questions based on the couple's interests and lifestyle, sends them via email at scheduled times, and processes responses through an automated webhook system. All questions and responses are stored in a database, creating a growing archive of the relationship's journey.
+The system uses AI to generate personalized questions based on shared interests and lifestyle, sends them via email at scheduled times, and processes responses through an automated webhook system. All questions and responses are stored in a database, creating a growing archive of the relationship's journey.
 
 ## How It Works
 This diagram provides a high-level view of how the system works:
@@ -80,7 +80,6 @@ This system is designed to be easily adapted for different couples or relationsh
    2. Audience profile: Include key details about the target audience, such as:
       - Demographic information
       - Relationship status
-      - Family structure
       - Occupation
       - Interests and hobbies
       - Values and priorities
