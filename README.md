@@ -3,7 +3,7 @@
 
 ## Question Creation Prompt
 
-You'll need to replace the prompt with a prompt unique to your use case. Fill out this template and put it into the LLM of your choice to generate the prompt. Be sure to include instructions to include {previous_questions} in the prompt
+You'll need to replace the prompt with a prompt unique to your use case. Fill out this template and put it into the LLM of your choice to generate the prompt. Be sure to include instructions to include {previous_questions} in the prompt. Then paste this prompt into the config.py file as the question_gen_prompt.
 
 Create a comprehensive prompt for an AI language model to generate daily questions for a specific audience. The prompt should include the following elements:
 

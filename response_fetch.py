@@ -1,26 +1,8 @@
-import os
 import re
 from flask import Flask, request, render_template
 from database_write import write_new_response
 from email_build import get_contact_emails_from_list_name
-
-
-
-app = Flask(__name__)
-
-# TODO: Move this to a config file
-@app.route('/ui')
-def ui():
-    return render_template('index.html')
-
-
-# TODO: Move this to a config file
-@app.route('/', methods=['GET'])
-def index():
-    """
-    Simple handler for the root path to avoid 404 errors.
-    """
-    return "Couples Journal API is running", 200
+from config import app
 
 def extract_response_from_email(subject, email_content):
     """
@@ -34,9 +16,9 @@ def extract_response_from_email(subject, email_content):
     text_match =  re.search(r'Content-Type: text/plain;.*?Content-Transfer-Encoding:[^\r\n]*\r\n\r\n(.*?)(?:\r\n\r\n----==|$)', email_content, re.DOTALL)
 
     response_text =  text_match.group(1).split('On ')[0] if text_match else None
-    
+
     print(response_text)
-    
+
     return question_id, response_text
 
 
@@ -59,8 +41,8 @@ def response_webhook():
 
       def check_emails():
           # Check if the email is in the allowed list
-          from main import SENDGRID_API_KEY, SENDGRID_LIST
-          allowed_emails = get_contact_emails_from_list_name(SENDGRID_API_KEY, SENDGRID_LIST)
+          from config import Config
+          allowed_emails = get_contact_emails_from_list_name(Config.SENDGRID_API_KEY, Config.SENDGRID_LIST)
           return allowed_emails
           
       allowed_emails = check_emails()
@@ -76,11 +58,5 @@ def response_webhook():
           return "OK", 200
       else:
           print("Unauthorized email address:", user_email)
-          return "Email not in allowed list", 200 # Return 200 to avoid retrying the webhook, should be 403 but Sendgrid doesn't support it
+          return "Email not in allowed list", 200 # Return 200 to avoid retrying the webhook, should be 403 but Sendgrid doesn't seem to support it and keeps retrying for up to 72 hours
           
-
-def start_email_webhook_server():
-    """
-    Start the webhook server.
-    """
-    app.run(host ='0.0.0.0', debug=True, port=5000, use_reloader= False, threaded=True)
