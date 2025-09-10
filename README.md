@@ -27,8 +27,8 @@ graph TD
     B --> C[Generate New Question with Claude]
     C --> D[Store Question in Database]
     D --> E[Send Email via SendGrid]
-    E --> F[Email Delivered to Couple]
-    F --> G[Couple Responds via Email]
+    E --> F[Email Delivered]
+    F --> G[Recipients Respond via Email]
     G --> H[SendGrid Webhook Triggered]
     H --> I[Extract Response Content]
     I --> J[Store Response in Database]
@@ -53,9 +53,9 @@ graph TD
 ```
 
 ## Features
-This describes the key capabilities that make the couples journal system effective:
+This describes the key capabilities that make the journal system effective:
 
-- **AI-Powered Question Generation**: Uses Anthropic's Claude to create personalized, varied questions based on the couple's profile and interests
+- **AI-Powered Question Generation**: Uses Anthropic's Claude to create personalized, varied questions based on the shared profile and interests
 - **Duplicate Prevention**: Tracks all previous questions for the past year to ensure fresh, unique content
 - **Automated Email Delivery**: Scheduled email sending via SendGrid to a curated contact list
 - **Response Collection**: Webhook system automatically captures and stores email replies
@@ -64,7 +64,7 @@ This describes the key capabilities that make the couples journal system effecti
 - **Security Controls**: Email validation ensures only authorized contacts can submit responses
 
 ## Customization Guide
-This system is designed to be easily adapted for different couples or relationship types:
+This system is designed to be easily adapted for different groups or relationship types:
 
 1. **Personalize Question Prompts**: 
    
@@ -129,7 +129,7 @@ This system is designed to be easily adapted for different couples or relationsh
    - Implement seasonal or event-based question themes
 
 ## Files
-This describes the role of key files in creating the couples journal experience:
+This describes the role of key files in creating the collaborative journal experience:
 
 - **main.py**: Application entry point that manages scheduling and coordinates all system components
 - **question_gen.py**: Handles AI question generation, database queries for previous questions, and prompt formatting
@@ -144,16 +144,16 @@ The system requires minimal compute resources since it primarily orchestrates AP
 
 1. **Clone and Install Dependencies**:
    ```bash
-   git clone [your-repo-url]
-   cd couples-journal
+   git clone https://github.com/brayden-s-haws/collab-email-journal
+   cd collab-email-journal
    poetry install
    ```
 
 2. **Database Setup**:
    ```sql
-   CREATE SCHEMA couples_journal;
+   CREATE SCHEMA journal;
    
-   CREATE TABLE couples_journal.users (
+   CREATE TABLE journal.users (
        user_id SERIAL PRIMARY KEY,
        first_name VARCHAR(50) NOT NULL,
        last_name VARCHAR(50) NOT NULL,
@@ -161,14 +161,14 @@ The system requires minimal compute resources since it primarily orchestrates AP
        created_at TIMESTAMP
    );
    
-   CREATE TABLE couples_journal.questions (
+   CREATE TABLE journal.questions (
        question_id SERIAL PRIMARY KEY,
        question_text VARCHAR NOT NULL,
        question_date DATE NOT NULL,
        created_at TIMESTAMP
    );
    
-   CREATE TABLE couples_journal.responses (
+   CREATE TABLE journal.responses (
        response_id SERIAL PRIMARY KEY,
        user_email VARCHAR(100) NOT NULL,
        question_id BIGINT NOT NULL,
