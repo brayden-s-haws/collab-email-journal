@@ -34,6 +34,8 @@ graph TD
     I --> J[Store Response in Database]
     J --> K[Archive for Future Reference]
 ```
+This is an example question that was generated from a prompt focused on a married couple:
+<img width="1422" height="196" alt="CleanShot HEY-2025-09-09" src="https://github.com/user-attachments/assets/4c859d44-2450-4337-a3ee-f86266532baa" />
 
 Here's how the question generation process ensures variety and relevance:
 
