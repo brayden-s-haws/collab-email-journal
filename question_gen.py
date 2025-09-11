@@ -14,7 +14,7 @@ def create_session():
     Create a database session.
     """
     db_url = Config.DATABASE_URL
-    engine = create_engine(db_url, connect_args={'options': '-csearch_path=couples_journal'})
+    engine = create_engine(db_url, connect_args={'options': '-csearch_path=journal'})
     Session = sessionmaker(bind=engine)
     return Session()
 
@@ -29,7 +29,7 @@ def setup_base_class():
 # Define the question class for the database
 class Question(setup_base_class()):
     __tablename__ = 'questions'
-    __table_args__ = {'schema': 'couples_journal'}
+    __table_args__ = {'schema': 'journal'}
 
     question_id = Column(Integer, primary_key=True)
     question_text = Column(String)
