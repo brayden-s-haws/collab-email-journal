@@ -54,7 +54,7 @@ def send_email(SENDGRID_API_KEY, SENDGRID_LIST, SENDGRID_EMAIL_FROM, SENDGRID_EM
     message = Mail(
       from_email=SENDGRID_EMAIL_FROM,  # This needs to match an email that you have verified with SendGrid
       to_emails=SENDGRID_EMAIL_CC,  # Put your email here so that you receive it when sent to the BCC'd recipients .
-      subject=f"Today's Couples Question ({question_temp_id})",  # The subject for the email
+      subject=f"Today's Question ({question_temp_id})",  # The subject for the email
       html_content=new_question
     )
     message.reply_to = SENDGRID_EMAIL_RESPONSE
