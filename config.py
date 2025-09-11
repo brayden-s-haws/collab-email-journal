@@ -30,7 +30,7 @@ def index():
     """
     Simple handler for the root path to avoid 404 errors.
     """
-    return "Couples Journal API is running", 200
+    return "Journal API is running", 200
 
 
 # Claude question generation prompt (Follow instructions in the README.md file to create a unique prompt for your use case)
