@@ -68,7 +68,7 @@ This system is designed to be easily adapted for different groups or relationshi
 1. **Personalize Question Prompts**: 
    
    You'll need to replace the current prompt with a prompt unique to your use case. **Follow these steps to create your custom prompt:**
-   /n
+   
    **Step 1**: Use this template in any LLM (ChatGPT, Claude, etc.) to generate your personalized prompt:
    
    ```
